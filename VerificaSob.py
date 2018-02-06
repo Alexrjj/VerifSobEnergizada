@@ -10,9 +10,10 @@ import openpyxl
 dados = openpyxl.load_workbook('C:\\gomnet.xlsx')
 login = dados['Plan1']
 url = 'http://gomnet.ampla.com/'
-fiscal = 'http://gomnet.ampla.com/DetalhesFiscalizacao.aspx?'
+urlFiscal = 'http://gomnet.ampla.com/DetalhesFiscalizacao.aspx?trabalho={1}&OS={2}'
 username = login['C1'].value
 password = login['C2'].value
+wb = openpyxl.load_workbook('sobs.xlsx')
 
 # ----------------- Modo Headless ------------------------
 # chromeOptions = webdriver.ChromeOptions()
@@ -39,5 +40,9 @@ if __name__ == '__main__':
     perfil.select_by_visible_text('EMPREITEIRA-GESTOR')
     driver.find_element_by_id('ImageButton_Logar').click()
 
-    # Verifica se está energizada com base no número a SOB + número trabalho
-    driver.get(fiscal)
+    # Verifica se está energizada com base no número da SOB + número trabalho
+    for sheet in wb.worksheets:
+        for (trabalho, sob) in zip(sheet.iter_cols(min_row=2, min_col=1, max_col=1), sheet.iter_cols(min_row=2, min_col=2, max_col=2)):
+            for (cell, cell2) in zip(trabalho, sob):
+                driver.get('http://gomnet.ampla.com/DetalhesFiscalizacao.aspx?trabalho={}&OS={}'.format(cell.value, cell2.value))
+
