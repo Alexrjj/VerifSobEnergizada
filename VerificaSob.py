@@ -2,6 +2,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import openpyxl
+import os
 
 #  Acessa os dados de login fora do script, salvo numa planilha existente, para proteger as informações de credenciais
 dados = openpyxl.load_workbook('C:\\gomnet.xlsx')
@@ -12,15 +13,15 @@ password = login['C2'].value
 wb = openpyxl.load_workbook('sobs.xlsx')
 
 # ----------------- Modo Headless ------------------------
-# chromeOptions = webdriver.ChromeOptions()
-# prefs = {"download.default_directory" : os.getcwd(),
-#          "download.prompt_for_download": False}
-# chromeOptions.add_experimental_option("prefs",prefs)
-# chromeOptions.add_argument('--headless')
-# chromeOptions.add_argument('--window-size= 1600x900')
-# driver = webdriver.Chrome(chrome_options=chromeOptions)
-
-driver = webdriver.Chrome()
+chromeOptions = webdriver.ChromeOptions()
+prefs = {"download.default_directory" : os.getcwd(),
+         "download.prompt_for_download": False}
+chromeOptions.add_experimental_option("prefs",prefs)
+chromeOptions.add_argument('--headless')
+chromeOptions.add_argument('--window-size= 1600x900')
+driver = webdriver.Chrome(chrome_options=chromeOptions)
+# --------------------------------------------------------
+# driver = webdriver.Chrome()
 
 if __name__ == '__main__':
     driver.get(url)
