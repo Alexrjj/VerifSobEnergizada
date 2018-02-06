@@ -1,7 +1,4 @@
-import os
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-import selenium
 from selenium import webdriver
 from selenium.webdriver.support.ui import Select
 import openpyxl
@@ -10,7 +7,6 @@ import openpyxl
 dados = openpyxl.load_workbook('C:\\gomnet.xlsx')
 login = dados['Plan1']
 url = 'http://gomnet.ampla.com/'
-urlFiscal = 'http://gomnet.ampla.com/DetalhesFiscalizacao.aspx?trabalho={1}&OS={2}'
 username = login['C1'].value
 password = login['C2'].value
 wb = openpyxl.load_workbook('sobs.xlsx')
