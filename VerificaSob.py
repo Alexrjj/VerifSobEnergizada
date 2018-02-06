@@ -45,4 +45,11 @@ if __name__ == '__main__':
         for (trabalho, sob) in zip(sheet.iter_cols(min_row=2, min_col=1, max_col=1), sheet.iter_cols(min_row=2, min_col=2, max_col=2)):
             for (cell, cell2) in zip(trabalho, sob):
                 driver.get('http://gomnet.ampla.com/DetalhesFiscalizacao.aspx?trabalho={}&OS={}'.format(cell.value, cell2.value))
-
+                #Verifica se a sob está apta a fiscalizar (energizada) e retorna no console o resultado
+                try:
+                    energ = driver.find_element_by_xpath('//*[@id="Label_Data_Energizacao" and text() != ""]')
+                    if energ.is_displayed():
+                        print('Sob ' + cell2.value + ' energizada.')
+                except NoSuchElementException:
+                    print('Sob ' + cell2.value + ' não energizada.')
+                    continue
